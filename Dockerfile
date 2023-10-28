@@ -3,11 +3,11 @@ FROM ubuntu:20.04 as base
 ARG TARGETARCH
 
 # Dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends tini libjson-c-dev libwebsockets-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tini libjson-c-dev libwebsockets-dev && rm -rf /var/lib/apt/lists/*
 
 FROM base as builder
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential cmake git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential cmake git && rm -rf /var/lib/apt/lists/*
 
 COPY ./src /ttyd/src
 COPY ./CMakeLists.txt /ttyd
