@@ -1,6 +1,6 @@
 import { bind } from 'decko';
 import { saveAs } from 'file-saver';
-import { IDisposable, ITerminalAddon, Terminal } from 'xterm';
+import { IDisposable, ITerminalAddon, Terminal } from '@xterm/xterm';
 import * as Zmodem from 'zmodem.js/src/zmodem_browser';
 import { TrzszFilter } from 'trzsz';
 
@@ -8,6 +8,7 @@ export interface ZmodeOptions {
     zmodem: boolean;
     trzsz: boolean;
     windows: boolean;
+    trzszDragInitTimeout: number;
     onSend: () => void;
     sender: (data: string | Uint8Array) => void;
     writer: (data: string | Uint8Array) => void;
@@ -75,6 +76,7 @@ export class ZmodemAddon implements ITerminalAddon {
             sendToServer: data => sender(data),
             terminalColumns: terminal.cols,
             isWindowsShell: this.options.windows,
+            dragInitTimeout: this.options.trzszDragInitTimeout,
         });
         const element = terminal.element as EventTarget;
         this.addDisposableListener(element, 'dragover', event => event.preventDefault());
